@@ -34,11 +34,10 @@ class VEMProcessor:
     """
         Here is the main class that makes this module, VEMProcessor
     """
-    def __init__(self, video_file):
+    def __init__(self):
         """
             To initialize it, pass the video fto be analyzed as an argument
         """
-        self.video_file = video_file
         self.segmenter = VideoSegmenter()
 
         self.opinion_model_transc = OpinionExtractionModel()
@@ -58,11 +57,12 @@ class VEMProcessor:
 
         self.emotion_map_generator = EmotionMapGenerator([])  # Adjust segment_block_size as needed
 
-    def process_video(self, segment_block_size = 10):
+    def process_video(self, video_file, segment_block_size = 10):
         """
           Use this to run the models for all the modalities(transcript, audio, video and multimodal) and generate the heatmaps.
 
           Args:
+            **video_file (mp4)**: video to be analized.
             **segment_block_size (int)**: size of the block used in each frame of the heatmap.
 
           Return:
@@ -72,7 +72,7 @@ class VEMProcessor:
 
         """
         # Step 1: Segment the video
-        self.segmented_video = self.segmenter.segment_video(self.video_file)
+        self.segmented_video = self.segmenter.segment_video(video_file)
         
         # Step 2: Extract opinions
         self.opinion_extractor_transc = OpinionExtractor([],self.opinion_model_transc)
@@ -89,9 +89,6 @@ class VEMProcessor:
         
         # Step 3: Extract multimodal opinions
         self.multimodal_extractor.segmented_with_emotion = self.segmented_video
-        self.multimodal_extractor.extract_multimodal_opinions()
-
-        self.multimodal_extractor.segmented_with_emotion = self.opinion_extractor.segmenter_result
         self.multimodal_extractor.extract_multimodal_opinions()
 
         # Step 4: Generate emotion map
@@ -113,7 +110,6 @@ class VideoSegmenter:
         format='%(asctime)s %(message)s',filemode='w')
         self.logger = logging.getLogger()
         self.logger.setLevel(logging.INFO)
-        os.mkdir("parts")
         pass
 
     def segment_video(self, video_file):
@@ -122,12 +118,14 @@ class VideoSegmenter:
         Each segment is represented as a series in a dataframe: (start_time, end_time, transcript_text, segment_file.mp4)
 
         Args:
-            **video_file (mp4)**: video to be analyzed.
+            **video_file (str)**: video to be analyzed.
 
         Return:
             Dataframe with all the segments.
 
         """
+        os.makedirs(video_file[0:3] + "parts", exist_ok=True)
+
         # Segment the video and extract transcript for each segment
         # Store each segment with its start time, end time, transcript, and save it as a new file
         self.logger.info("Transcripting the video")
@@ -147,7 +145,7 @@ class VideoSegmenter:
 
             clip = video.subclip(startPos, endPos)
 
-            part_name = "parts/part_"+str(i)+".mp4"
+            part_name = video_file[0:3] + "parts/part_"+str(i)+".mp4"
 
             names.append(part_name)
 
@@ -454,12 +452,16 @@ class EmotionMapGenerator:
         if modality == 'multimodal':
           x = []
           y = []
+          x_img = []
+          y_img = []
           GCP(self.graph,mi=1,audio_weight=0.4, text_weight=0.6,max_iter=30)
           for index in self.segments_with_emotion.index:
             v = self.graph.nodes[index]['f']
+            x.append(v[0])
+            y.append(v[1])
             if (np.abs(v[0]) > 0.1 or np.abs(v[1]) > 0.1):
-              x.append(v[0])
-              y.append(v[1])
+              x_img.append(v[0])
+              y_img.append(v[1])
         else:
           df = get_labels(self.segments_with_emotion, modality)
 
@@ -471,18 +473,26 @@ class EmotionMapGenerator:
 
           df = pd.concat([df, temp], axis=1)
 
-          #df = df[df[label]!='neutral']
-          df = df.reset_index(drop=True)
-
           array_x = df['x'].to_numpy()
           x = array_x.tolist()
           array_y = df['y'].to_numpy()
           y = array_y.tolist()
 
+          dfimage = df[df[label]!='neutral']
+          dfimage = dfimage.reset_index(drop=True)
+
+          array_x_img = dfimage['x'].to_numpy()
+          x_img = array_x_img.tolist()
+          array_y_img = dfimage['y'].to_numpy()
+          y_img = array_y_img.tolist()
+
+
+        vid_name = self.segments_with_emotion["segment_file"][0]
+        vid_name = vid_name[0:3]
         os.makedirs("tempjpgs", exist_ok=True)
-        os.makedirs("heatmaps", exist_ok=True)
+        os.makedirs(vid_name + "heatmaps", exist_ok=True)
         
-        plot_heatmap(x, y, self.emotions_coord, modality)
+        plot_heatmap(x_img, y_img, self.emotions_coord, modality, vid_name)
 
 
         id_ini = 0
@@ -502,7 +512,6 @@ class EmotionMapGenerator:
               x_temp = [i for i,j in zip(x_temp,y_temp) if (i != 0 and j != 0)]
               y_temp = [j for i,j in zip(x[id_ini: id_fim],y_temp) if (i != 0 and j != 0)]
 
-            plot_heatmap(x_temp, y_temp, self.emotions_coord, "animated")
             plt.title("Emotions from " + str(id_ini) + " to " + str(id_fim-1) + " block")
             plt.savefig("tempjpgs/output" + str(atual) + ".jpg")
             plt.close()
@@ -524,7 +533,7 @@ class EmotionMapGenerator:
         os.rmdir("tempjpgs")
 
         rate = 1
-        out = cv2.VideoWriter("heatmaps/"+ modality + '_heatmap.mp4',cv2.VideoWriter_fourcc(*'XVID'), rate, size)
+        out = cv2.VideoWriter(vid_name +"heatmaps/"+ modality + '_heatmap.mp4',cv2.VideoWriter_fourcc(*'XVID'), rate, size)
 
         for i in range(len(img_array)):
           for j in range(2):
@@ -532,7 +541,7 @@ class EmotionMapGenerator:
 
         out.release()
 
-        myvideo = VideoFileClip("heatmaps/"+modality + '_heatmap.mp4')
+        myvideo = VideoFileClip(vid_name + "heatmaps/"+modality + '_heatmap.mp4')
         self.logger.info("Video created")
 
         return ipython_display(myvideo)
@@ -582,7 +591,7 @@ def kde_quartic(d,h):
     dn=d/h
     P=(15/16)*(1-dn**2)**2
     return P
-def plot_heatmap(x, y, emotions_coord, modality):
+def plot_heatmap(x, y, emotions_coord, modality, vid_name):
     #Definindo tamanho do grid e do raio(h)
     grid_size=0.02
     h=0.5
@@ -648,7 +657,7 @@ def plot_heatmap(x, y, emotions_coord, modality):
     #plt.colorbar()
 
     plt.plot(x,y,'x',color='white')
-    plt.savefig("heatmaps/" + modality + "heatmap.png")
+    plt.savefig(vid_name + "heatmaps/" + modality + "heatmap.png")
 
 #Funcoes auxiliares para a transcricao
 def transcript(video, method = "whisperx", min_time = 1):
