@@ -34,8 +34,12 @@ Também possui outras 5 classes que podem ser customizadas para alterar o proces
   </li>
 </ul>
 
-  Aqui tem um exemplo de heatmap gerado
+Aqui tem um exemplo de heatmap gerado
+
+
 <img src="/img/heatmap.png">
+
+
 Links Importantes
 
 Exemplo de uso do pip [https://colab.research.google.com/drive/1sYAYRxFdpa86Huxm-KVkEvQo6x8ZmgS6?authuser=1#scrollTo=yF78bgHtziJ6](https://colab.research.google.com/drive/1UqzA6bDgtZWGji652a0UjT7ZtDh3Xyi5?authuser=1#scrollTo=CKL-Mm9D18BB)
