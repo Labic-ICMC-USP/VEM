@@ -1,0 +1,10 @@
+gdown
+matplotlib
+git+https://github.com/m-bain/whisperX.git
+transformers
+webvtt-py
+ffmpeg
+moviepy
+opencv-python
+deepface
+sentence_transformers
