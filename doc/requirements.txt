@@ -8,6 +8,7 @@ matplotlib
 git+https://github.com/m-bain/whisperX.git
 transformers
 webvtt-py
+tf-keras
 ffmpeg
 moviepy
 opencv-python
