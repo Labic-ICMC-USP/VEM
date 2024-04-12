@@ -42,7 +42,7 @@ Aqui tem um exemplo de heatmap gerado
 
 Links Importantes
 
-Exemplo de uso do pip [https://colab.research.google.com/drive/1sYAYRxFdpa86Huxm-KVkEvQo6x8ZmgS6?authuser=1#scrollTo=yF78bgHtziJ6](https://colab.research.google.com/drive/1UqzA6bDgtZWGji652a0UjT7ZtDh3Xyi5?authuser=1#scrollTo=CKL-Mm9D18BB)
+Exemplo de uso do pip [https://colab.research.google.com/drive/1sYAYRxFdpa86Huxm-KVkEvQo6x8ZmgS6?authuser=1#scrollTo=yF78bgHtziJ6](https://colab.research.google.com/drive/1sYAYRxFdpa86Huxm-KVkEvQo6x8ZmgS6?authuser=1#scrollTo=yF78bgHtziJ6)
 
 Apresentação no Canvas explicando o projeto (versão antiga do projeto cahamda VIEMR) [https://www.canva.com/design/DAFy1Pywr0Q/F6_WBK5Bjz12OHZG8P4V8Q/edit](https://www.canva.com/design/DAFy1Pywr0Q/F6_WBK5Bjz12OHZG8P4V8Q/edit)
 https://sol.sbc.org.br/index.php/eniac/article/view/25746/25562
