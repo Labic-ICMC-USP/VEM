@@ -40,6 +40,9 @@ Aqui tem um exemplo de heatmap gerado
 <img src="/img/heatmap.png">
 
 
+https://github.com/Labic-ICMC-USP/VEM/assets/101677859/ce280772-b6b8-4954-acb3-7180b290bc30
+
+
 Links Importantes
 
 Exemplo de uso do pip [https://colab.research.google.com/drive/1sYAYRxFdpa86Huxm-KVkEvQo6x8ZmgS6?authuser=1#scrollTo=yF78bgHtziJ6](https://colab.research.google.com/drive/1sYAYRxFdpa86Huxm-KVkEvQo6x8ZmgS6?authuser=1#scrollTo=yF78bgHtziJ6)
