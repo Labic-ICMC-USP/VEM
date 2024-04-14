@@ -56,7 +56,24 @@ Artigo do ENIAC publicado sobre o assunto elaborado pelo colega Gabriel Natal[ht
 
 Fontes para os modelos utilizados:
 Github do whisperx(transcrição) [https://github.com/m-bain/whisperX](https://github.com/m-bain/whisperX)
+
+
 Hugging Face do tradutor da Unicamp [https://huggingface.co/unicamp-dl/translation-pt-en-t5](https://huggingface.co/unicamp-dl/translation-pt-en-t5)
+
+
 Site oficial do goemotions (texto) [https://blog.research.google/2021/10/goemotions-dataset-for-fine-grained.html?m=1](https://blog.research.google/2021/10/goemotions-dataset-for-fine-grained.html?m=1)
+
+
 Github contendo a implementação do classificador HUBERT (áudio) [https://github.com/m3hrdadfi/soxan](https://github.com/m3hrdadfi/soxan)
+
+
 Github do deepface(vídeo) [https://github.com/serengil/deepface](https://github.com/serengil/deepface)
+
+
+
+
+Este projeto foi apoiado pelo Ministério da Ciência, Tecnologia e Inovações, com recursos
+da Lei no 8.248, de 23 de outubro de 1991, no âmbito do PPI-SOFTEX, coordenado pela Softex e
+publicado Residência em TIC 13, DOU 01245.010222/2022-44.
+
+Um agradecimento ao projeto da Motorola e ao C4AI por financiarem e fortalecerem pesquisas no âmbito do Centro de IA
