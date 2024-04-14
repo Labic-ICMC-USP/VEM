@@ -45,6 +45,8 @@ https://github.com/Labic-ICMC-USP/VEM/assets/101677859/ce280772-b6b8-4954-acb3-7
 
 Links Importantes
 
+Documentação: [https://vem.readthedocs.io/en/latest/](https://vem.readthedocs.io/en/latest/)
+
 Exemplo de uso do pip [https://colab.research.google.com/drive/1sYAYRxFdpa86Huxm-KVkEvQo6x8ZmgS6?authuser=1#scrollTo=yF78bgHtziJ6](https://colab.research.google.com/drive/1sYAYRxFdpa86Huxm-KVkEvQo6x8ZmgS6?authuser=1#scrollTo=yF78bgHtziJ6)
 
 Apresentação no Canvas explicando o projeto (versão antiga do projeto cahamda VIEMR) [https://www.canva.com/design/DAFy1Pywr0Q/F6_WBK5Bjz12OHZG8P4V8Q/edit](https://www.canva.com/design/DAFy1Pywr0Q/F6_WBK5Bjz12OHZG8P4V8Q/edit)
